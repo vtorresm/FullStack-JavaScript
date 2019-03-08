@@ -1,5 +1,4 @@
-import './styles/app.css';
-
+import "./styles/app.css";
 
 import Book from './models/Book.js';
 import UI from './UI.js';
@@ -11,12 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 document.getElementById('book-form')
-  .addEventListener('submit', function(e) {
+  .addEventListener('submit', function (e) {
 
     const title = document.getElementById('title').value;
     const author = document.getElementById('author').value;
     const isbn = document.getElementById('isbn').value;
-    
+
     const image = document.getElementById('image').files;
 
     const formData = new FormData();
