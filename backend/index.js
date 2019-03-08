@@ -4,35 +4,37 @@ if (process.env.NODE_ENV !== 'production') {
 
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
 
-//Initializations
+// Initializations
 const app = express();
 require('./database');
 
-//Settings
-app.set('port', process.env.PORT || 4200);
+// settings
+app.set('port', process.env.PORT || 4000);
 
-//Middlewares
+// middlewares
 app.use(morgan('dev'));
+app.use(cors());
 const storage = multer.diskStorage({
     destination: path.join(__dirname, 'public/uploads'),
     filename(req, file, cb) {
         cb(null, new Date().getTime() + path.extname(file.originalname));
     }
 })
-app.use(multer(storage).single('image'));
-app.use(express.urlencoded({extended: false}));
+app.use(multer({ storage }).single('image'));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-//Routes
+// routes
 app.use('/api/books', require('./routes/books'));
 
-//Static Files
-app.use(express.static(path.join(__dirname, 'public'))); 
+// static files
+app.use(express.static(path.join(__dirname, 'public')));
 
-//Start the server
+// start the server
 app.listen(app.get('port'), () => {
-    console.log('Server on port', app.get('port'));
+    console.log(`Server on port ${app.get('port')}`);
 });
